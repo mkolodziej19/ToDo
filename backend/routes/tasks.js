@@ -18,11 +18,11 @@ router.post('/', async (req, res) => {
     res.send(_.pick(task, ['content', 'status', 'userId']));
 });
 
-router.put('/', async (req, res) => {
+router.put('/:id', async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    let task = await Task.findOne({ content: req.body.content});
+    let task = await Task.findOne({ _id: req.params.id});
     if (!task) return res.status(400).send("Task doesn't exist.");
 
     task.status = req.body.status;
@@ -31,35 +31,15 @@ router.put('/', async (req, res) => {
     res.send(_.pick(task, ['content', 'status', 'userId']));
 });
 
-router.get('/', async (req, res) => {
-    /*const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);*/
-
-//    let tasks = [];
-
-    let tasks = await Task.find(); //({ userId: req.body.userId}); Task.f
-    //if (!task) return res.status(400).send("Task doesn't exist.");
-
-    function checkUserId(arg, com) {
-        return arg===com;
-    }
-      
-    var tasksFiltered = tasks//.filter(checkUserId);
-    // filtered is [12, 130, 44]
-  
-    res.send(tasksFiltered);
-//    res.send(_.pick(task, ['content', 'status', 'userId']));
+router.get('/:id', async (req, res) => {
+    const tasks = await Task.find({userId: req.params.id})
+    res.send(tasks);
 });
 
-router.delete('/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-    let task = await Task.findOne({ content: req.body.content});
-//    if (task) return res.status(400).send('Task already exists.');
-
-    await task.remove();
-    
+    let task = await Task.findOne({ _id: req.params.id});
+    await task.remove();  
     res.send(_.pick(task, ['content', 'status', 'userId']));
 });
 
