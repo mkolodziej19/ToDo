@@ -27,7 +27,7 @@ a{
 	background-color:#cec;
 }
 
-.list-group-item, #filter, #login, #password, #confirm{
+.list-group-item, #filter, #name, #email, #login, #password, #confirm{
 	background-color:#ffe;
 }
 
