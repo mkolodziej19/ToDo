@@ -4,6 +4,7 @@ Joi.objectId = require('joi-objectid')(Joi);
 const mongoose = require('mongoose');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+const tasks = require('./routes/tasks');
 const express = require ('express');
 const app = express();
 
@@ -25,6 +26,7 @@ mongoose.connect(`mongodb+srv://admin:${config.get('mongoPassword')}@cluster0-2m
 app.use(express.json());
 app.use('/api/users', users);
 app.use('/api/auth', auth);
+app.use('/api/tasks', tasks);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));

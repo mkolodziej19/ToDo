@@ -1,3 +1,11 @@
+let tasks;
+
+document.addEventListener('DOMContentLoaded', async function gettingTasks(id){
+	tasks = await fetch(`http://localhost:3000/api/tasks/${id}`)
+		.then(res => res);
+	return tasks;
+}, false);
+
 let formWaiting = document.getElementById('addFormWaiting');
 let formProgress = document.getElementById('addFormProgress');
 let formFinished = document.getElementById('addFormFinished');
@@ -163,3 +171,5 @@ function filterItems(e){
 	  });
 	}
 }
+
+
